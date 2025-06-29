@@ -4,3 +4,7 @@ scipy
 pyarrow
 scikit-learn
 torch
+
+matplotlib
+seaborn
+folium
