@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: src
+Version: 0.1.0
+Summary: Modular ML development template for deep learning projects
+Home-page: https://github.com/J-Ngaiii/mldev-template
+Author: Jonathan Ngai
+Requires-Python: >=3.9,<3.12
+Requires-Dist: torch
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: pyarrow
+Requires-Dist: scipy
+Requires-Dist: scikit-learn
+Requires-Dist: torch
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
