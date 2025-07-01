@@ -22,6 +22,16 @@ DATA_URL = {
             }, 
         'downloader' : "csv",  
         'paths' : {'raw' : 'data/raw', 'processed' : 'data/processed', 'interim' : 'data/interim'}
+    }, 
+    'nyc-people' : {
+        'url' : "https://data.cityofnewyork.us/resource/f55k-p6yu.json", 
+        'params' : {
+            '$select': "*", 
+            '$where': "crash_date >= '2015-01-01T00:00:00.000'", # get last 10 years worth of data
+            '$limit': 10000
+            }, 
+        'downloader' : "csv",  
+        'paths' : {'raw' : 'data/raw', 'processed' : 'data/processed', 'interim' : 'data/interim'}
     }
 }
 

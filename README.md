@@ -9,7 +9,8 @@ For Python version, this repo requires at least Python 3.9 and strictly less tha
 Move to the root directory via `cd` then run `pip install -r requirements.txt`. 
 
 If you're running this repo on a Macbook and you run into installation issues install some of the dependencies via conda then try to install using requirements.txt again:
-    - run: `conda install scipy pyarrow scikit-learn`
+    - run: `conda install scipy pyarrow scikit-learn` (cuz Macbooks error when trying to install these straight from requirements.txt)
+    - run `pip install xgboost==1.7.6` (Macbook has issue with later versions of XGBoost not using a precompiled binary)
     - then run: `pip install -r requirements.txt`
 
 Finally run `pip install -e .` to run files in the `src` folder of this repo as a package locally.

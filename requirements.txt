@@ -2,11 +2,13 @@ numpy
 pandas
 scipy
 pyarrow
+
 scikit-learn
 torch
+xgboost
+mlflow
 
 matplotlib
-seaborn
 seaborn
 folium
 

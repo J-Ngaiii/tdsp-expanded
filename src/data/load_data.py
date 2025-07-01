@@ -12,7 +12,7 @@ if __name__ == '__main__':
          '$limit': 1000}
     ]
     
-    NAME = 'nyc-crashes'
+    NAME = 'nyc-people'
     
     if ALL:
         load_data(name=NAME, fetchall=True, params=None)
