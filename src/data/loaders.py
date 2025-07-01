@@ -3,13 +3,18 @@ import time
 from typing import LiteralString
 import pandas as pd
 
-from src.config.config import get_all__dataset_names, get_data_master
-from src.data.load_helpers import download_csv
+from src.config.config import get_all_dataset_names, get_data_master
+from src.data.load_helpers import get_downloader
 
 def load_data(name, fetchall=False, params=None, rtrn=False):
     URL = get_data_master(name, 'url')
-
-    if all:
+    downloader_key = get_data_master(name, 'downloader')
+    downloader = get_downloader(downloader_key)
+    if downloader is None:
+        raise ValueError(f"No downloader registered for key: {downloader_key}")
+    
+    if fetchall:
+        print("Fetching all rows...")
         URL = get_data_master(name, 'url')
         LIMIT = 50000
         offset = 0
@@ -40,30 +45,32 @@ def load_data(name, fetchall=False, params=None, rtrn=False):
         
         print(f"Total rows fetched: {len(data)}")
         if rtrn:
-            return download_csv(name, data, rtrn=True) # loads data into current working directory
+            return downloader(name, data, rtrn=True) # loads data into current working directory
         else:
-            download_csv(name, data, rtrn=False)
+            downloader(name, data, rtrn=False)
     else:
         if params is None:
             params = get_data_master(name, 'params')
             if not params:
                 raise ValueError(f"No built in parameters for dataset {name}, please define parameters")
+            else:
+                print(f"Using default params for {name}, fetching rows...")
         response = requests.get(URL, params=params)
 
         if response.status_code == 200:
             data = response.json()
             print(f"Total rows fetched: {len(data)}")
             if rtrn:
-                return download_csv(name, data, rtrn=True) # loads data into current working directory
+                return downloader(name, data, rtrn=True) # loads data into current working directory
             else:
-                download_csv(name, data, rtrn=False)
+                downloader(name, data, rtrn=False)
         else:
             print("Request failed:", response.status_code)
 
 def query(name: LiteralString, select: str = "*", where: str = "1=1", limit: int = 1000, write: bool = True) -> pd.DataFrame:
     """Uses SoQL"""
     assert isinstance(name, str), f"dataset_name arg must be a string but is type {type(name)}"
-    assert name in get_all__dataset_names(), f"dataset_name not found, existing dataset names include {get_all__dataset_names()}"
+    assert name in get_all_dataset_names(), f"dataset_name not found, existing dataset names include {get_all_dataset_names()}"
 
     assert isinstance(select, str), f"select arg must be a string but is type {type(select)}"
     assert isinstance(where, str), f"where arg must be a string but is type {type(where)}"

@@ -1,4 +1,4 @@
-name: ML Dev Template
+name: Basic Workflow
 
 on:
   workflow_dispatch:  # Allows manual triggering

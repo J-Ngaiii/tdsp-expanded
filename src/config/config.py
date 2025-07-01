@@ -1,16 +1,26 @@
 from typing import Set
-
-from src.data.load_helpers import download_csv
+import pandas as pd
+import os
 
 DATA_URL = {
-    'nyc motor' : {
+    'nyc-vehicles' : {
         'url' : "https://data.cityofnewyork.us/resource/bm4k-52h4.json", 
         'params' : {
             '$select': "*", 
             '$where': "crash_date >= '2015-01-01T00:00:00.000'", # get last 10 years worth of data
-            '$limit': 4000000
+            '$limit': 10000
             }, 
-        'rettype' : download_csv, 
+        'downloader' : "csv",  
+        'paths' : {'raw' : 'data/raw', 'processed' : 'data/processed', 'interim' : 'data/interim'}
+    }, 
+    'nyc-crashes' : {
+        'url' : "https://data.cityofnewyork.us/resource/h9gi-nx95.json", 
+        'params' : {
+            '$select': "*", 
+            '$where': "crash_date >= '2015-01-01T00:00:00.000'", # get last 10 years worth of data
+            '$limit': 10000
+            }, 
+        'downloader' : "csv",  
         'paths' : {'raw' : 'data/raw', 'processed' : 'data/processed', 'interim' : 'data/interim'}
     }
 }
@@ -26,7 +36,7 @@ def get_data_url(name='nyc motor'):
 
     return DATA_URL.get(name).get('url', "")
 
-def get_all__dataset_names() -> Set[str]:
+def get_all_dataset_names() -> Set[str]:
     return set(DATA_URL.keys())
 
 def get_output_path(name, pathtype):

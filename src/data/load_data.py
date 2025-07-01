@@ -3,7 +3,7 @@ import pandas as pd
 from src.data.loaders import load_data 
 
 if __name__ == '__main__':
-    ALL = False
+    ALL = True
     DEFAULT = True
     CUSTOM = False
     param_settings = [
@@ -12,7 +12,7 @@ if __name__ == '__main__':
          '$limit': 1000}
     ]
     
-    NAME = 'nyc motor'
+    NAME = 'nyc-crashes'
     
     if ALL:
         load_data(name=NAME, fetchall=True, params=None)
